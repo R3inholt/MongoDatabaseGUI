@@ -96,3 +96,4 @@ This idea came out from PhpMyAdmin which provides user-friendly UI that allow to
 * Exception protections
 * Better UI
 
+
