@@ -85,7 +85,7 @@ namespace MoviesDatabase
             {
                 DialogResult dr = addComment.ShowDialog();
 
-                if (dr == DialogResult.OK)
+                if (dr == DialogResult.Yes)
                 {
                     MongoQueries.AddComment(addComment.NewComment);
                     MongoQueries.UpdateCommentAmount(addComment.MovieTitle, addComment.UserEmail);

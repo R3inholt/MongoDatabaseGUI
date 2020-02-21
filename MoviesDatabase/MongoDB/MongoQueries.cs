@@ -33,6 +33,8 @@ namespace MoviesDatabase
 
 
 
+
+
         public static object GetAllComments()
         {
             _nestedGrid[] nestedItems = new _nestedGrid[] { _nestedGrid.Comments_Users };
@@ -177,6 +179,23 @@ namespace MoviesDatabase
             }
 
             return titlesList;
+        }
+
+        public static List<string> GetUsersEmails()
+        {
+            List<string> usersEmails = new List<string>();
+
+            List<BsonDocument> queryResult = _userCollection
+                .Find(Builders<BsonDocument>.Filter.Empty)
+                .ToList();
+
+            foreach (var item in queryResult)
+            {
+                usersEmails.Add(item["Email"].ToString());
+            }
+
+            return usersEmails;
+
         }
 
         

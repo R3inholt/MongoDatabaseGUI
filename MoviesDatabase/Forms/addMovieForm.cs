@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using DataService;
+using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,80 +23,7 @@ namespace MoviesDatabase
         public List<BsonDocument> MoviesList = new List<BsonDocument>();
         DataSet _itemList = new DataSet();
         bool _firstInsert = true;
-
-        bool CheckError(bool checkOnlyDB)
-        {            
-            bool _anyErrors = false;
-            List<string> _dataGridTitlesList = new List<string>();
-            List<string> _dbTitlesList = new List<string>();
-            Regex _yearRegex = new Regex(@"(\d{4})");
-            Regex _lengthRegex = new Regex(@"(\d{3})");
-            Regex _onlyLetters = new Regex(@"^[a-zA-Z?:,. \s?]+$");
-
-            if(checkOnlyDB)
-            {
-                _dbTitlesList = MongoQueries.GetMoviesTitles();
-            }
-            else
-            {
-                if (_itemList.Tables.Count == 0)
-                {
-                    _dbTitlesList = MongoQueries.GetMoviesTitles();
-                }
-                else
-                {
-                    _dbTitlesList = MongoQueries.GetMoviesTitles();
-
-                    foreach (var item in _itemList.Tables[0].AsEnumerable())
-                    {
-                        _dataGridTitlesList.Add(item["Title"].ToString());
-                    }
-
-                }
-            }
-
-
-
-
-            if ((_dbTitlesList.Contains(titleTxtBox.Text) || _dataGridTitlesList.Contains(titleTxtBox.Text)) || titleTxtBox.Text == string.Empty)
-            {
-                MessageBox.Show("The title is inappropiate or is already given!", "Input data error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                _anyErrors = true;
-            }
-            else if (!(_yearRegex.IsMatch(yearTxtBox.Text)) || yearTxtBox.Text == string.Empty)
-            {
-                MessageBox.Show("Give a proper year of production!", "Input data error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                _anyErrors = true;
-            }
-            else if (!(_lengthRegex.IsMatch(lengthTxtBox.Text)) || lengthTxtBox.Text == string.Empty)
-            {
-                MessageBox.Show("Give a proper duration of movie!", "Input data error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                _anyErrors = true;
-            }
-            else if (!(_onlyLetters.IsMatch(directorsTxtBox.Text)) || directorsTxtBox.Text == string.Empty)
-            {
-                MessageBox.Show("Give a proper directors name/names!", "Input data error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                _anyErrors = true;
-            }
-            else if (!(_onlyLetters.IsMatch(genreTxtBox.Text)) || genreTxtBox.Text == string.Empty)
-            {
-                MessageBox.Show("Give a proper film genre/genres!", "Input data error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                _anyErrors = true;
-            }
-            else if (descriptionLabel.Text == string.Empty)
-            {
-                MessageBox.Show("Give a proper description!", "Input data error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                _anyErrors = true;
-            }
-            else
-            {
-                _anyErrors = false;
-            }
-
-            return _anyErrors;
-
-
-        }
+        
         DataTable fillRows(DataTable newItem)
         {
             newItem.Columns.Add("Title");
@@ -122,7 +50,7 @@ namespace MoviesDatabase
         void addOneOperation()
         {
 
-            if(CheckError(true) == true)
+            if(new ItemCheck(titleTxtBox.Text, Convert.ToInt32(yearTxtBox.Text), Convert.ToInt32(lengthTxtBox.Text), directorsTxtBox.Text, genreTxtBox.Text, descriptionTxtBox.Text).MovieCheck(true, _itemList) == true)
             {
                 //encountered an error, do nothing
             }
@@ -147,7 +75,7 @@ namespace MoviesDatabase
 
         private void addToListBtn_Click(object sender, EventArgs e)
         {
-            if (CheckError(false) == false)
+            if (new ItemCheck(titleTxtBox.Text, Convert.ToInt32(yearTxtBox.Text), Convert.ToInt32(lengthTxtBox.Text), directorsTxtBox.Text, genreTxtBox.Text, descriptionTxtBox.Text).MovieCheck(false, _itemList) == false)
             {
                 DataTable _newItem = new DataTable();
                 _newItem = fillRows(_newItem);

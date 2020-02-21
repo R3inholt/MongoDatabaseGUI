@@ -23,13 +23,25 @@ namespace MoviesDatabase
 
         private void addUserBtn_Click(object sender, EventArgs e)
         {
-            if(MessageBox.Show("Do you want to add user to database?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if(new ItemCheck(nameTxt.Text, secondNameTxt.Text, emailTxt.Text, passwordTxt.Text, rdDateTimePicker.Value).UserCheck() == true)
             {
-                BsonDocument _newDocument = DBItem.Movie(nameTxt.Text, secondNameTxt.Text, emailTxt.Text, passwordTxt.Text, rdDateTimePicker.Value);
-
-                Document = _newDocument;
-                this.DialogResult = DialogResult.OK;
+                // error, do nothing
             }
+            else
+            {
+                if (MessageBox.Show("Do you want to add user to database?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    BsonDocument _newDocument = DBItem.Movie(nameTxt.Text, secondNameTxt.Text, emailTxt.Text, passwordTxt.Text, rdDateTimePicker.Value);
+
+                    Document = _newDocument;
+                    this.DialogResult = DialogResult.OK;
+                }
+                else
+                {
+                    // do nothing
+                }
+            }
+
 
         }
     }

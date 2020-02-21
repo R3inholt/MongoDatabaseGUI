@@ -51,6 +51,7 @@
     <Reference Include="MongoDB.Driver.Legacy, Version=2.9.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\mongocsharpdriver.2.9.3\lib\net452\MongoDB.Driver.Legacy.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="SharpCompress, Version=0.23.0.0, Culture=neutral, PublicKeyToken=afb0a02973931d96, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpCompress.0.23.0\lib\net45\SharpCompress.dll</HintPath>
@@ -82,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataService\DBItem.cs" />
+    <Compile Include="DataService\ItemCheck.cs" />
     <Compile Include="Forms\AddCommentForm.cs">
       <SubType>Form</SubType>
     </Compile>

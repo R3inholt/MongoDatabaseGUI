@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Forms;
 
 namespace MoviesDatabase
@@ -66,40 +67,33 @@ namespace MoviesDatabase
 
         private void addCommentBtn_Click(object sender, EventArgs e)
         {
-            if(nameSurnameEmailComboBox.SelectedItem == null)
+            if(new ItemCheck(nameSurnameEmailComboBox.SelectedItem, moviesComboBox.SelectedItem, commentTxtBox.Text, commentDateTimePicker.Value).CommentCheck() == true)
             {
-                MessageBox.Show("Select user which will add a comment!", "Input data error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //error, do nothing
             }
-            else if(moviesComboBox.SelectedItem == null)
+            else
             {
-                MessageBox.Show("Select movie which will be commented!", "Input data error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }           
-            else if(commentTxtBox.Text == string.Empty)
-            {
-                MessageBox.Show("Give a proper comment input!", "Input data error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else if(MessageBox.Show("Do you want to add these movies to database?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                this.DialogResult = DialogResult.OK;
-            }
-            if(this.DialogResult == DialogResult.OK)
-            {
-                string name = nameSurnameEmailComboBox.SelectedItem.ToString().Split(' ')[0];
-                string secondName = nameSurnameEmailComboBox.SelectedItem.ToString().Split(' ', ',')[1];
-                string email = nameSurnameEmailComboBox.SelectedItem.ToString().Substring(nameSurnameEmailComboBox.SelectedItem.ToString().LastIndexOf(',') + 2);
-                string movieTitle = moviesComboBox.SelectedItem.ToString();
-                string contents = commentTxtBox.Text;
-                DateTime addDate = commentDateTimePicker.Value;
+                if (MessageBox.Show("Do you want to add this comment to database?","Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    string name = nameSurnameEmailComboBox.SelectedItem.ToString().Split(' ')[0];
+                    string secondName = nameSurnameEmailComboBox.SelectedItem.ToString().Split(' ', ',')[1];
+                    string email = nameSurnameEmailComboBox.SelectedItem.ToString().Substring(nameSurnameEmailComboBox.SelectedItem.ToString().LastIndexOf(',') + 2);
+                    string movieTitle = moviesComboBox.SelectedItem.ToString();
+                    string contents = commentTxtBox.Text;
+                    DateTime addDate = commentDateTimePicker.Value;
 
-                BsonDocument _document = DBItem.Comment(name, secondName, email, movieTitle, contents, addDate);
+                    BsonDocument _document = DBItem.Comment(name, secondName, email, movieTitle, contents, addDate);
 
-                NewComment = _document;
-                MovieTitle = movieTitle;
-                UserEmail = email;
+                    NewComment = _document;
+                    MovieTitle = movieTitle;
+                    UserEmail = email;
 
-
-
-
+                    this.DialogResult = DialogResult.Yes;
+                }
+                else
+                {
+                    //do nothing
+                }
             }
         }
     }
