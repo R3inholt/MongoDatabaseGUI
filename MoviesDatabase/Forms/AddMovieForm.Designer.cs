@@ -45,6 +45,7 @@
             this.listDataGrid = new System.Windows.Forms.DataGrid();
             this.addToListBtn = new System.Windows.Forms.Button();
             this.addAllBtn = new System.Windows.Forms.Button();
+            this.deleteBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.listDataGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -66,6 +67,7 @@
             this.cancelBtn.TabIndex = 1;
             this.cancelBtn.Text = "Cancel";
             this.cancelBtn.UseVisualStyleBackColor = true;
+            this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
             // 
             // yearTxtBox
             // 
@@ -199,12 +201,22 @@
             this.addAllBtn.UseVisualStyleBackColor = true;
             this.addAllBtn.Click += new System.EventHandler(this.addAllBtn_Click);
             // 
+            // deleteBtn
+            // 
+            this.deleteBtn.Location = new System.Drawing.Point(779, 415);
+            this.deleteBtn.Name = "deleteBtn";
+            this.deleteBtn.Size = new System.Drawing.Size(94, 23);
+            this.deleteBtn.TabIndex = 17;
+            this.deleteBtn.Text = "Delete selected";
+            this.deleteBtn.UseVisualStyleBackColor = true;
+            // 
             // addMovieForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(966, 450);
             this.ControlBox = false;
+            this.Controls.Add(this.deleteBtn);
             this.Controls.Add(this.addAllBtn);
             this.Controls.Add(this.addToListBtn);
             this.Controls.Add(this.listDataGrid);
@@ -249,5 +261,6 @@
         private System.Windows.Forms.DataGrid listDataGrid;
         private System.Windows.Forms.Button addToListBtn;
         private System.Windows.Forms.Button addAllBtn;
+        private System.Windows.Forms.Button deleteBtn;
     }
 }

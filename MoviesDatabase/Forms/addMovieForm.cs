@@ -208,5 +208,10 @@ namespace MoviesDatabase
                 //do nothing
             }
         }
+
+        private void cancelBtn_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+        }
     }
 }
