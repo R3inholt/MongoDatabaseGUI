@@ -140,6 +140,20 @@ namespace MoviesDatabase
               
         }
 
+        static void DeleteMovies()
+        {
+
+        }
+
+        static void DeleteComments()
+        {
+
+        }
+
+        static void DeleteUsers()
+        {
+
+        }
 
         public static object GetFullNameAndEmail()
         {

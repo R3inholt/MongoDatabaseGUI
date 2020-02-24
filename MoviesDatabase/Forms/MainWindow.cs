@@ -101,23 +101,27 @@ namespace MoviesDatabase
             int itemIndex = 0;
             DataTable myTable = (DataTable)dataGrid1.DataSource;
 
-            List<string> titlesList = new List<string>();
+            List<string> argumentsList = new List<string>();
 
 
             foreach (DataRow item in myTable.Rows)
             {
                 if(dataGrid1.IsSelected(itemIndex))
                 {
-                    titlesList.Add(item["Tytuł"].ToString());
+                    if(check.ToString() == "Movies")
+                        argumentsList.Add(item["Tytuł"].ToString());
+                    if (check.ToString() == "Comment")
+                        argumentsList.Add(item["Tytuł"].ToString());
+
                 }
 
                 itemIndex++;
                 
             }
 
-            var deleteAll = Builders<BsonDocument>.Filter.AnyIn("tytul", titlesList);
+            var deleteAll = Builders<BsonDocument>.Filter.AnyIn("tytul", argumentsList);
             
-            MongoQueries.DeleteMany(deleteAll, titlesList);
+            MongoQueries.DeleteMany(deleteAll, argumentsList);
 
             getAllMoviesBtn_Click(sender, e);
 
