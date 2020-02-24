@@ -22,6 +22,7 @@ namespace MoviesDatabase
 
         public List<BsonDocument> MoviesList = new List<BsonDocument>();
         DataSet _itemList = new DataSet();
+        public BsonDocument NewMovie;
         bool _firstInsert = true;
         
         DataTable fillRows(DataTable newItem)
@@ -107,7 +108,7 @@ namespace MoviesDatabase
         {
             foreach (var item in _itemList.Tables[0].AsEnumerable())
             {
-                var _document = new BsonDocument
+                NewMovie = new BsonDocument
                 {
                     {"tytul", new BsonString(item["Title"].ToString()) },
                     {"rok_wydania", new BsonInt32(Convert.ToInt32(item["Year of release"])) },
@@ -119,7 +120,7 @@ namespace MoviesDatabase
                 };
 
 
-                MoviesList.Add(_document);
+                MoviesList.Add(NewMovie);
             }
 
             foreach (var item in MoviesList)

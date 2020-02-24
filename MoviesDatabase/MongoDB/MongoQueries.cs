@@ -85,21 +85,9 @@ namespace MoviesDatabase
             _movieCollection.InsertMany(moviesList);
         }
 
-        public static void AddMovie(string title, int year, int length, string directors, string genre, string description)
+        public static void AddMovie(BsonDocument newMovie)
         {
-
-            var document = new BsonDocument
-            {
-                {"tytul", new BsonString(title) },
-                {"rok_wydania", new BsonInt32(year) },
-                {"dlugosc_trwania", new BsonInt32(length) },
-                {"rezyseria", new BsonString(directors) },
-                {"gatunek", new BsonString(genre)},
-                {"krotki_opis", new BsonString(description) },
-                {"ilosc_komentarzy", new BsonInt32(0) }
-            };
-
-            _movieCollection.InsertOne(document);
+            _movieCollection.InsertOne(newMovie);
 
         }
 

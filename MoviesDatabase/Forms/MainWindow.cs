@@ -67,7 +67,7 @@ namespace MoviesDatabase
 
                 if(dr == DialogResult.OK)
                 {
-                    MongoQueries.AddMovie(addMovieForm.titleTxtBox.Text, Convert.ToInt32(addMovieForm.yearTxtBox.Text), Convert.ToInt32(addMovieForm.lengthTxtBox.Text), addMovieForm.directorsTxtBox.Text, addMovieForm.genreTxtBox.Text, addMovieForm.descriptionTxtBox.Text );
+                    MongoQueries.AddMovie(addMovieForm.NewMovie);
                     MessageBox.Show("Successfully added 1 movie.", "Add", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 if(dr == DialogResult.Yes)
