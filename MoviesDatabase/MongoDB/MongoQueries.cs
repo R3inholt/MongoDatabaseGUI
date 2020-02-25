@@ -121,37 +121,61 @@ namespace MoviesDatabase
         }
 
 
-        public static void DeleteMany(FilterDefinition<BsonDocument> deleteAll, List<string> titlesList)
+        public static void DeleteMany(List<string> argumentsList, string check)
         {
-           
-                      
-            var query = _movieCollection
-                .DeleteMany(deleteAll)
-                .DeletedCount;
-                
-            var commentFilter = Builders<BsonDocument>.Filter.AnyIn("Nazwa_filmu", titlesList);
-
-            var deletedOrphans = _commentsCollection
-                .DeleteMany(commentFilter)
-                .DeletedCount;
-
-
-            MessageBox.Show("Deleted " + query + " movies from database and " + deletedOrphans + " associated comments.");
+            if (check == "Movies")
+                DeleteMovies(argumentsList);
+            else if (check == "Comments")
+                DeleteComments(argumentsList);
+            else if (check == "Users")
+                DeleteUsers(argumentsList);
               
         }
 
-        static void DeleteMovies()
+        static void DeleteMovies(List<string> argumentsList)
         {
+            var _deleteAll = Builders<BsonDocument>.Filter.AnyIn("tytul", argumentsList);
+
+            var _query = _movieCollection
+                .DeleteMany(_deleteAll)
+                .DeletedCount;
+
+            var _commentFilter = Builders<BsonDocument>.Filter.AnyIn("Nazwa_filmu", argumentsList);
+
+            var _deletedOrphans = _commentsCollection
+                .DeleteMany(_commentFilter)
+                .DeletedCount;
+
+            MessageBox.Show("Deleted " + _query + " movies from database and " + _deletedOrphans + " associated comments.");
+        }
+
+        static void DeleteComments(List<string> argumentsList)
+        {
+            var _deleteAll = Builders<BsonDocument>.Filter.AnyIn("Email", argumentsList);
+
+            var _query = _commentsCollection
+                .DeleteMany(_deleteAll)
+                .DeletedCount;
+
+            MessageBox.Show("Deleted " + _query + " comments from database.");
 
         }
 
-        static void DeleteComments()
+        static void DeleteUsers(List<string> argumentsList)
         {
+            var _deleteAll = Builders<BsonDocument>.Filter.AnyIn("Email", argumentsList);
 
-        }
+            var _query = _userCollection
+                .DeleteMany(_deleteAll)
+                .DeletedCount;
 
-        static void DeleteUsers()
-        {
+            var _commentFilter = Builders<BsonDocument>.Filter.AnyIn("Email", argumentsList);
+
+            var _deletedOrphans = _commentsCollection
+                .DeleteMany(_commentFilter)
+                .DeletedCount;
+
+            MessageBox.Show("Deleted " + _query + " users from database and " + _deletedOrphans + " associated comments.");
 
         }
 

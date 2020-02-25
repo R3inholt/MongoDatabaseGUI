@@ -110,18 +110,19 @@ namespace MoviesDatabase
                 {
                     if(check.ToString() == "Movies")
                         argumentsList.Add(item["Tytuł"].ToString());
-                    if (check.ToString() == "Comment")
-                        argumentsList.Add(item["Tytuł"].ToString());
+                    if (check.ToString() == "Comments")
+                        argumentsList.Add(item["Email"].ToString());
+                    if (check.ToString() == "Users")
+                        argumentsList.Add(item["Email"].ToString());
+                        
 
                 }
 
                 itemIndex++;
                 
             }
-
-            var deleteAll = Builders<BsonDocument>.Filter.AnyIn("tytul", argumentsList);
             
-            MongoQueries.DeleteMany(deleteAll, argumentsList);
+            MongoQueries.DeleteMany(argumentsList, check.ToString());
 
             getAllMoviesBtn_Click(sender, e);
 
